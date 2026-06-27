@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Atya is an open-source ecosystem of modular, composable .NET libraries, packages, templates, and engineering building blocks." />
+  <meta name="theme-color" content="#0b1020" />
+  <title>Atya — Composable .NET Building Blocks</title>
+
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0b1728;
+      --surface: rgba(15, 31, 52, 0.78);
+      --surface-solid: #0f1f34;
+      --surface-muted: #132942;
+      --border: rgba(184, 216, 255, 0.14);
+      --border-strong: rgba(184, 216, 255, 0.26);
+      --text: #f0f7ff;
+      --text-soft: #b6c9dc;
+      --text-muted: #7f9ab4;
+      --primary: #64d8ff;
+      --primary-strong: #1fb9ef;
+      --accent: #8d7dff;
+      --green: #65e6b4;
+      --warning: #f4c874;
+      --shadow: 0 18px 70px rgba(0, 0, 0, 0.28);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--text);
+      background:
+        radial-gradient(900px 450px at 15% -5%, rgba(31, 185, 239, 0.21), transparent 62%),
+        radial-gradient(750px 420px at 95% 8%, rgba(141, 125, 255, 0.18), transparent 60%),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible { outline: 3px solid var(--primary); outline-offset: 3px; }
+
+    .container { width: min(calc(100% - 40px), var(--max-width)); margin: 0 auto; }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(184, 216, 255, 0.08);
+      background: rgba(7, 17, 31, 0.78);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 72px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      font-size: 1.22rem;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 33px;
+      height: 33px;
+      border: 1px solid rgba(100, 216, 255, 0.5);
+      border-radius: 10px;
+      color: #06101e;
+      background: linear-gradient(135deg, #93eaff, #8d7dff);
+      box-shadow: 0 0 28px rgba(100, 216, 255, 0.32);
+      font-size: 0.92rem;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 20px; }
+    .nav-links a { color: var(--text-soft); font-size: 0.94rem; }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(100, 216, 255, 0.34);
+      border-radius: 10px;
+      padding: 9px 13px;
+      color: var(--text) !important;
+      background: rgba(100, 216, 255, 0.08);
+    }
+
+    main { overflow: hidden; }
+
+    .hero { padding: 104px 0 78px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+      gap: 58px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 17px;
+      border: 1px solid rgba(101, 230, 180, 0.26);
+      border-radius: 999px;
+      padding: 7px 11px;
+      color: #a9f2d4;
+      background: rgba(101, 230, 180, 0.07);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+    }
+
+    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 4px rgba(101, 230, 180, 0.13); }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      max-width: 790px;
+      margin-bottom: 20px;
+      font-size: clamp(2.65rem, 5.2vw, 5rem);
+      line-height: 1.02;
+      letter-spacing: -0.062em;
+    }
+
+    h1 .gradient-text {
+      color: transparent;
+      background: linear-gradient(90deg, #99eaff, #a79cff);
+      background-clip: text;
+      -webkit-background-clip: text;
+    }
+
+    .hero-copy { max-width: 665px; color: var(--text-soft); font-size: 1.12rem; }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      min-height: 46px;
+      border-radius: 11px;
+      padding: 0 17px;
+      font-weight: 750;
+      font-size: 0.94rem;
+      transition: transform 170ms ease, border-color 170ms ease, background 170ms ease;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary { color: #06111f; background: linear-gradient(135deg, #92eaff, #68c9ff); box-shadow: 0 12px 34px rgba(31, 185, 239, 0.18); }
+    .button-secondary { border: 1px solid var(--border-strong); color: var(--text); background: rgba(255,255,255,0.03); }
+
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 25px; color: var(--text-muted); font-size: 0.88rem; }
+    .hero-meta span { display: inline-flex; align-items: center; gap: 7px; }
+
+    .code-window {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(150, 219, 255, 0.18);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(150deg, rgba(21, 42, 68, 0.95), rgba(9, 21, 37, 0.9));
+      box-shadow: var(--shadow);
+    }
+
+    .code-window::before {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      background: radial-gradient(420px 300px at 110% -10%, rgba(141, 125, 255, 0.2), transparent 65%);
+    }
+
+    .window-top { display: flex; align-items: center; gap: 7px; min-height: 50px; padding: 0 19px; border-bottom: 1px solid var(--border); }
+    .dot { width: 10px; height: 10px; border-radius: 50%; background: #45607e; }
+    .dot:nth-child(1) { background: #ff8686; }
+    .dot:nth-child(2) { background: #f4c874; }
+    .dot:nth-child(3) { background: #65e6b4; }
+    .window-title { margin-left: 8px; color: var(--text-muted); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.78rem; }
+
+    pre {
+      overflow: auto;
+      margin: 0;
+      padding: 27px 28px 30px;
+      color: #d6ecff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.91rem;
+      line-height: 1.75;
+    }
+
+    .token-comment { color: #7895b2; }
+    .token-keyword { color: #ad9cff; }
+    .token-type { color: #70e1ff; }
+    .token-string { color: #a8f0ca; }
+    .token-method { color: #ffe3a0; }
+
+    .section { padding: 82px 0; }
+    .section-alt { border-top: 1px solid rgba(184, 216, 255, 0.08); border-bottom: 1px solid rgba(184, 216, 255, 0.08); background: rgba(8, 23, 39, 0.45); }
+
+    .section-heading { max-width: 715px; margin-bottom: 35px; }
+    .section-heading h2 { margin-bottom: 12px; font-size: clamp(2rem, 3.5vw, 3.1rem); letter-spacing: -0.047em; line-height: 1.08; }
+    .section-heading p { margin-bottom: 0; color: var(--text-soft); font-size: 1.04rem; }
+
+    .principles-grid, .areas-grid, .resource-grid { display: grid; gap: 16px; }
+    .principles-grid { grid-template-columns: repeat(4, 1fr); }
+    .areas-grid { grid-template-columns: repeat(3, 1fr); }
+    .resource-grid { grid-template-columns: repeat(3, 1fr); }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 21px;
+      background: var(--surface);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover { border-color: rgba(100, 216, 255, 0.34); }
+
+    .icon-box {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      margin-bottom: 17px;
+      border-radius: 11px;
+      color: #a9ebff;
+      background: rgba(100, 216, 255, 0.1);
+      font-size: 1.12rem;
+    }
+
+    .card h3 { margin-bottom: 7px; font-size: 1.04rem; letter-spacing: -0.015em; }
+    .card p { margin: 0; color: var(--text-soft); font-size: 0.92rem; }
+
+    .area-card { display: flex; flex-direction: column; min-height: 190px; }
+    .area-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; }
+    .area-top h3 { margin: 0; font-size: 1.08rem; }
+    .status { flex: 0 0 auto; border: 1px solid rgba(101, 230, 180, 0.2); border-radius: 999px; padding: 4px 8px; color: #a9f2d4; background: rgba(101, 230, 180, 0.06); font-size: 0.72rem; font-weight: 700; }
+    .status-planned { border-color: rgba(244, 200, 116, 0.2); color: #f8d898; background: rgba(244, 200, 116, 0.06); }
+    .area-card p { margin: 13px 0 18px; }
+    .package-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: auto; }
+    .package-list span { border: 1px solid rgba(184,216,255,0.1); border-radius: 7px; padding: 4px 7px; color: #bcd2e8; background: rgba(255,255,255,0.025); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.72rem; }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(310px, 0.7fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .architecture-diagram {
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 27px;
+      background: linear-gradient(145deg, rgba(20, 42, 69, 0.74), rgba(10, 23, 39, 0.84));
+    }
+
+    .layer { position: relative; display: grid; grid-template-columns: 170px 1fr; gap: 18px; align-items: center; padding: 17px 0; }
+    .layer + .layer { border-top: 1px solid rgba(184,216,255,0.1); }
+    .layer-label { color: #cce5ff; font-weight: 800; letter-spacing: -0.02em; }
+    .layer-body { display: flex; flex-wrap: wrap; gap: 8px; }
+    .node { border: 1px solid rgba(100,216,255,0.2); border-radius: 8px; padding: 7px 9px; color: #c8e7ff; background: rgba(100,216,255,0.06); font-size: 0.8rem; }
+    .node-high { border-color: rgba(141,125,255,0.36); background: rgba(141,125,255,0.1); color: #ddd8ff; }
+
+    .architecture-copy { display: flex; flex-direction: column; justify-content: center; }
+    .architecture-copy .card { height: 100%; }
+    .architecture-copy ul { display: grid; gap: 11px; padding-left: 18px; margin: 18px 0 0; color: var(--text-soft); }
+    .architecture-copy li::marker { color: var(--primary); }
+
+    .quick-start {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(340px, 0.78fr);
+      gap: 24px;
+      align-items: center;
+      padding: 34px;
+      border: 1px solid rgba(100,216,255,0.19);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(125deg, rgba(28, 64, 95, 0.45), rgba(17, 26, 54, 0.65));
+    }
+
+    .quick-start h2 { margin-bottom: 11px; font-size: clamp(1.9rem, 3vw, 2.7rem); letter-spacing: -0.045em; }
+    .quick-start p { max-width: 650px; margin-bottom: 0; color: var(--text-soft); }
+    .command { margin-top: 21px; border: 1px solid rgba(184,216,255,0.13); border-radius: 11px; padding: 14px 15px; color: #d9efff; background: rgba(0,0,0,0.22); font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88rem; }
+
+    .footer { padding: 42px 0 29px; }
+    .footer-grid { display: flex; align-items: flex-start; justify-content: space-between; gap: 28px; }
+    .footer-copy { max-width: 420px; color: var(--text-muted); font-size: 0.88rem; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 16px; color: var(--text-soft); font-size: 0.9rem; }
+    .footer-links a:hover { color: var(--primary); }
+    .copyright { margin-top: 30px; color: #6e88a2; font-size: 0.8rem; }
+
+    @media (max-width: 960px) {
+      .hero-grid, .architecture, .quick-start { grid-template-columns: 1fr; }
+      .principles-grid { grid-template-columns: repeat(2, 1fr); }
+      .areas-grid, .resource-grid { grid-template-columns: repeat(2, 1fr); }
+      .quick-start { padding: 27px; }
+    }
+
+    @media (max-width: 670px) {
+      .container { width: min(calc(100% - 28px), var(--max-width)); }
+      .nav { min-height: 62px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+      .hero { padding: 69px 0 58px; }
+      .section { padding: 62px 0; }
+      .principles-grid, .areas-grid, .resource-grid { grid-template-columns: 1fr; }
+      .layer { grid-template-columns: 1fr; gap: 8px; }
+      .architecture-diagram { padding: 20px; }
+      .footer-grid { display: block; }
+      .footer-links { justify-content: flex-start; margin-top: 19px; }
+      h1 { font-size: clamp(2.48rem, 13vw, 3.4rem); }
+      pre { padding: 21px; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#top" aria-label="Atya home">
+        <span class="brand-mark">A</span>
+        <span>Atya</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main navigation">
+        <a href="#packages">Packages</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#start">Get started</a>
+        <a class="nav-cta" href="https://github.com/AtyaLibraries" target="_blank" rel="noreferrer">View on GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow"><span class="pulse"></span> Open-source .NET ecosystem</div>
+          <h1>Composable <span class="gradient-text">.NET building blocks</span> for production applications.</h1>
+          <p class="hero-copy">
+            Atya is a growing collection of focused NuGet packages, templates, and engineering tools for modern .NET applications. Build with small, reusable components instead of one giant shared library.
+          </p>
+
+          <div class="button-row">
+            <a class="button button-primary" href="https://github.com/AtyaLibraries" target="_blank" rel="noreferrer">Explore repositories <span aria-hidden="true">→</span></a>
+            <a class="button button-secondary" href="https://www.nuget.org/packages?q=Atya." target="_blank" rel="noreferrer">Browse NuGet packages ↗</a>
+          </div>
+
+          <div class="hero-meta" aria-label="Key qualities">
+            <span>◈ Independently versioned</span>
+            <span>◈ Minimal dependencies</span>
+            <span>◈ Public by default</span>
+          </div>
+        </div>
+
+        <div class="code-window" aria-label="Atya installation example">
+          <div class="window-top">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="window-title">Program.cs</span>
+          </div>
+          <pre><code><span class="token-comment">// Choose only the building blocks your app needs.</span>
+
+<span class="token-keyword">var</span> builder = WebApplication.<span class="token-method">CreateBuilder</span>(args);
+
+builder.Services
+    .<span class="token-method">AddAtyaProblemDetails</span>()
+    .<span class="token-method">AddAtyaObservation</span>(options =&gt;
+    {
+        options.ServiceName = <span class="token-string">"Orders.Api"</span>;
+    });
+
+<span class="token-keyword">var</span> app = builder.<span class="token-method">Build</span>();
+app.<span class="token-method">Run</span>();</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="principles-title">
+      <div class="container">
+        <div class="section-heading">
+          <h2 id="principles-title">Designed for composition, not lock-in.</h2>
+          <p>Each package has one clear responsibility. Use one package, or compose a practical stack for APIs, workers, messaging, and shared infrastructure.</p>
+        </div>
+
+        <div class="principles-grid">
+          <article class="card">
+            <div class="icon-box">◫</div>
+            <h3>Focused packages</h3>
+            <p>Small package boundaries make dependencies, upgrades, and adoption easier to reason about.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box">↗</div>
+            <h3>Clean direction</h3>
+            <p>Foundation stays low-level. Framework and provider integrations remain separate and optional.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box">⌁</div>
+            <h3>Stable public APIs</h3>
+            <p>Public surfaces are treated as contracts, with semantic versioning and intentional evolution.</p>
+          </article>
+          <article class="card">
+            <div class="icon-box">✓</div>
+            <h3>Production-minded</h3>
+            <p>Packages are built around testing, documentation, diagnostics, and practical .NET conventions.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="packages" aria-labelledby="packages-title">
+      <div class="container">
+        <div class="section-heading">
+          <h2 id="packages-title">A package ecosystem that grows with your application.</h2>
+          <p>Start at the foundation, add only the capabilities you need, and keep vendor-specific integrations out of generic packages.</p>
+        </div>
+
+        <div class="areas-grid">
+          <article class="card area-card">
+            <div class="area-top"><h3>Foundation</h3><span class="status">Available</span></div>
+            <p>Core contracts, primitives, guards, time abstractions, and shared serialization conventions.</p>
+            <div class="package-list"><span>Abstractions</span><span>Primitives</span><span>Guards</span><span>Time</span><span>Serialization</span></div>
+          </article>
+
+          <article class="card area-card">
+            <div class="area-top"><h3>Errors</h3><span class="status">Available</span></div>
+            <p>Consistent error taxonomy, validation building blocks, and RFC 9457-oriented ProblemDetails support.</p>
+            <div class="package-list"><span>Exceptions</span><span>ProblemDetails</span><span>Validation</span></div>
+          </article>
+
+          <article class="card area-card">
+            <div class="area-top"><h3>Diagnostics</h3><span class="status">Available</span></div>
+            <p>Provider-agnostic logging, tracing, metrics, observation, and OpenTelemetry composition.</p>
+            <div class="package-list"><span>Logging</span><span>Tracing</span><span>Metrics</span><span>OpenTelemetry</span></div>
+          </article>
+
+          <article class="card area-card">
+            <div class="area-top"><h3>Web</h3><span class="status status-planned">Growing</span></div>
+            <p>ASP.NET Core conventions for APIs, middleware, OpenAPI, audit, and health checks.</p>
+            <div class="package-list"><span>Web</span><span>Middleware</span><span>OpenApi</span><span>HealthChecks</span></div>
+          </article>
+
+          <article class="card area-card">
+            <div class="area-top"><h3>Security</h3><span class="status status-planned">Growing</span></div>
+            <p>Authentication, authorization, security utilities, and multi-tenancy capabilities.</p>
+            <div class="package-list"><span>Authentication</span><span>Authorization</span><span>Utilities</span></div>
+          </article>
+
+          <article class="card area-card">
+            <div class="area-top"><h3>Data &amp; Messaging</h3><span class="status status-planned">Planned</span></div>
+            <p>Reusable contracts first, followed by optional infrastructure adapters for storage and brokers.</p>
+            <div class="package-list"><span>Data</span><span>EF Core</span><span>RabbitMQ</span><span>Kafka</span><span>Outbox</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" id="architecture" aria-labelledby="architecture-title">
+      <div class="container">
+        <div class="section-heading">
+          <h2 id="architecture-title">A clear dependency story.</h2>
+          <p>Atya packages are organized to keep generic building blocks independent from web hosts, vendor SDKs, and application-specific infrastructure.</p>
+        </div>
+
+        <div class="architecture">
+          <div class="architecture-diagram" role="img" aria-label="Atya architecture with Foundation at the base, Errors Diagnostics and Governance in the middle, and Web Security Messaging Data Platform and Application packages above.">
+            <div class="layer">
+              <div class="layer-label">Application layer</div>
+              <div class="layer-body"><span class="node node-high">Application</span><span class="node node-high">Platform</span><span class="node node-high">Templates</span></div>
+            </div>
+            <div class="layer">
+              <div class="layer-label">Integration layer</div>
+              <div class="layer-body"><span class="node">Web</span><span class="node">Security</span><span class="node">Messaging</span><span class="node">Data</span></div>
+            </div>
+            <div class="layer">
+              <div class="layer-label">Cross-cutting layer</div>
+              <div class="layer-body"><span class="node">Errors</span><span class="node">Diagnostics</span><span class="node">Governance</span></div>
+            </div>
+            <div class="layer">
+              <div class="layer-label">Foundation layer</div>
+              <div class="layer-body"><span class="node">Abstractions</span><span class="node">Primitives</span><span class="node">Guards</span><span class="node">Time</span><span class="node">Serialization</span></div>
+            </div>
+          </div>
+
+          <div class="architecture-copy">
+            <article class="card">
+              <div class="icon-box">⇣</div>
+              <h3>Simple rules, safer reuse.</h3>
+              <p>Each package is built to remain understandable in isolation and dependable in larger systems.</p>
+              <ul>
+                <li>Low-level packages never depend on high-level hosts or integrations.</li>
+                <li>Vendor-specific behavior lives in dedicated adapter packages.</li>
+                <li>Packages can be adopted individually rather than as an all-or-nothing framework.</li>
+                <li>Tests, README documentation, and package metadata are part of the release standard.</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="start" aria-labelledby="start-title">
+      <div class="container">
+        <div class="quick-start">
+          <div>
+            <h2 id="start-title">Start with the package your application actually needs.</h2>
+            <p>Browse the Atya organization for source code and examples, or search NuGet for packages beginning with <strong>Atya.</strong></p>
+            <div class="command">dotnet add package Atya.Foundation.Primitives</div>
+          </div>
+          <div class="button-row">
+            <a class="button button-primary" href="https://www.nuget.org/packages?q=Atya." target="_blank" rel="noreferrer">Find a package ↗</a>
+            <a class="button button-secondary" href="https://github.com/AtyaLibraries" target="_blank" rel="noreferrer">Read source code ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt" aria-labelledby="resources-title">
+      <div class="container">
+        <div class="section-heading">
+          <h2 id="resources-title">Built in the open.</h2>
+          <p>Use GitHub for source code, issues, discussions, and contribution. Use NuGet for releases and package consumption.</p>
+        </div>
+
+        <div class="resource-grid">
+          <a class="card" href="https://github.com/AtyaLibraries" target="_blank" rel="noreferrer">
+            <div class="icon-box">⌘</div>
+            <h3>GitHub organization</h3>
+            <p>Browse repositories, source code, release notes, issue tracking, and contribution guidance.</p>
+          </a>
+          <a class="card" href="https://www.nuget.org/packages?q=Atya." target="_blank" rel="noreferrer">
+            <div class="icon-box">⬡</div>
+            <h3>NuGet packages</h3>
+            <p>Discover published Atya packages and install the exact building blocks you need.</p>
+          </a>
+          <a class="card" href="https://github.com/AtyaLibraries/.github" target="_blank" rel="noreferrer">
+            <div class="icon-box">✦</div>
+            <h3>Contribute</h3>
+            <p>Help improve documentation, tests, package ideas, and reusable engineering conventions.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a class="brand" href="#top"><span class="brand-mark">A</span><span>Atya</span></a>
+          <p class="footer-copy">Composable, open-source .NET building blocks for teams that want reusable foundations without a monolithic shared library.</p>
+        </div>
+        <div class="footer-links">
+          <a href="#packages">Packages</a>
+          <a href="#architecture">Architecture</a>
+          <a href="https://github.com/AtyaLibraries" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://www.nuget.org/packages?q=Atya." target="_blank" rel="noreferrer">NuGet</a>
+        </div>
+      </div>
+      <div class="copyright">© <span id="year"></span> Atya. Open source under the licenses defined by each repository.</div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
