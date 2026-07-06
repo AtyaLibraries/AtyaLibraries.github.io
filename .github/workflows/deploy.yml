@@ -30,6 +30,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Generate package catalog
+        run: npm run generate:data
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
       - name: Build
         run: npm run build
 
