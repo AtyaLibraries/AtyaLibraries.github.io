@@ -5,6 +5,7 @@
   "type": "module",
   "description": "Atya Libraries — modern .NET 10 NuGet package family showcase.",
   "scripts": {
+    "generate:data": "node scripts/generate-data.mjs",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
