@@ -22,6 +22,10 @@ export const CATEGORIES = [
     "label": "Errors"
   },
   {
+    "key": "Web",
+    "label": "Web"
+  },
+  {
     "key": "Application",
     "label": "Application"
   },
@@ -161,6 +165,13 @@ export const PACKAGES = [
     "category": "Tooling",
     "type": "template",
     "description": "Production-ready .NET 10 NuGet package starter template."
+  },
+  {
+    "id": "Atya.Web.Middleware",
+    "repo": "Middleware",
+    "category": "Web",
+    "type": "library",
+    "description": "ASP.NET Core middleware for exception and Result mapping, ProblemDetails, and correlation IDs."
   }
 ]
 
