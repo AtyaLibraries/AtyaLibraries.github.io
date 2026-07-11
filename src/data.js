@@ -22,6 +22,10 @@ export const CATEGORIES = [
     "label": "Errors"
   },
   {
+    "key": "Application",
+    "label": "Application"
+  },
+  {
     "key": "Governance",
     "label": "Governance"
   },
@@ -32,6 +36,13 @@ export const CATEGORIES = [
 ]
 
 export const PACKAGES = [
+  {
+    "id": "Atya.Application.Mediator",
+    "repo": "Mediator",
+    "category": "Application",
+    "type": "library",
+    "description": "Source-generated, reflection-free mediator contracts and dispatch for Result-returning handlers."
+  },
   {
     "id": "Atya.Diagnostics.Logging",
     "repo": "Logging",
@@ -108,6 +119,13 @@ export const PACKAGES = [
     "category": "Foundation",
     "type": "library",
     "description": "Primitive types and value objects for the Atya foundation layer."
+  },
+  {
+    "id": "Atya.Foundation.Results",
+    "repo": "Results",
+    "category": "Foundation",
+    "type": "library",
+    "description": "Result and Error primitives for expected, recoverable outcomes in Atya libraries."
   },
   {
     "id": "Atya.Foundation.Serialization",
