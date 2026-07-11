@@ -4,6 +4,7 @@
     { "key": "Foundation", "label": "Foundation" },
     { "key": "Diagnostics", "label": "Diagnostics" },
     { "key": "Errors", "label": "Errors" },
+    { "key": "Application", "label": "Application" },
     { "key": "Governance", "label": "Governance" },
     { "key": "Tooling", "label": "Tooling" }
   ],
@@ -21,6 +22,7 @@
     "Atya.Errors.Exceptions": { "category": "Errors", "type": "library", "description": "Exception types and helpers for consistent error handling." },
     "Atya.Errors.ProblemDetails": { "category": "Errors", "type": "library", "description": "RFC 7807 Problem Details helpers for ASP.NET Core services." },
     "Atya.Errors.Validation": { "category": "Errors", "type": "library", "description": "Validation primitives and error helpers for the Atya error layer." },
+    "Atya.Application.Mediator": { "category": "Application", "type": "library", "description": "Source-generated, reflection-free mediator contracts and dispatch for Result-returning handlers." },
     "Atya.Governance.CodeQuality": { "category": "Governance", "type": "library", "description": "Centralized StyleCop and .NET analyzer configuration for Atya repositories." },
     "Atya.Governance.Testing": { "category": "Governance", "type": "library", "description": "Small, focused test-only helpers for Atya packages and applications." },
     "Atya.Templates.NuGetPackage": { "category": "Tooling", "type": "template", "description": "Production-ready .NET 10 NuGet package starter template." }

@@ -57,11 +57,14 @@ async function getPackageId(repo, branch) {
     .map((item) => item.path)
     .filter((item) => /^src\/.+\.csproj$/u.test(item))
 
-  if (projects.length !== 1) {
+  const canonicalProject = `src/${repo}/${repo}.csproj`
+  const packageProjects = projects.includes(canonicalProject) ? [canonicalProject] : projects
+
+  if (packageProjects.length !== 1) {
     throw new Error(`${repo}: expected exactly one package project under src, found ${projects.length}`)
   }
 
-  const content = await getJson(`${API}/repos/${ORG}/${repo}/contents/${encodeURIComponent(projects[0])}?ref=${encodeURIComponent(branch)}`)
+  const content = await getJson(`${API}/repos/${ORG}/${repo}/contents/${encodeURIComponent(packageProjects[0])}?ref=${encodeURIComponent(branch)}`)
   const projectXml = Buffer.from(content.content, 'base64').toString('utf8')
   const match = projectXml.match(/<PackageId>([^<]+)<\/PackageId>/u)
 
