@@ -51,6 +51,13 @@ function propertyValue(properties, name) {
 }
 
 async function getPackageId(repo, branch) {
+  // Template repos ship a `dotnet new` template with multiple projects under src/,
+  // so there is no single canonical package project to scan. Their published package
+  // id equals the repo name (e.g. Atya.Templates.UiAutomation).
+  if (/^Atya\.Templates\./u.test(repo)) {
+    return repo
+  }
+
   const tree = await getJson(`${API}/repos/${ORG}/${repo}/git/trees/${encodeURIComponent(branch)}?recursive=1`)
   const projects = tree.tree
     .filter((item) => item.type === 'blob')
