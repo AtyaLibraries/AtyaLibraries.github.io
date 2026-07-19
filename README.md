@@ -13,10 +13,12 @@ family of focused, modern **.NET 10** NuGet packages published under the reserve
 
 ## Local development
 
-> Requires Node.js 18+.
+> Requires Node.js 20.19+ or 22.12+.
 
 ```bash
-npm install
+npm ci
+npm test
+npm run audit:security
 npm run dev      # local dev server
 npm run build    # production build into dist/
 npm run preview  # preview the production build
