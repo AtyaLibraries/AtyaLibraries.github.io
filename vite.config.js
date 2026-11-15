@@ -5,6 +5,17 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   base: '/',
   plugins: [react()],
+  server: {
+    host: '127.0.0.1',
+    allowedHosts: [],
+    fs: {
+      strict: true,
+    },
+  },
+  preview: {
+    host: '127.0.0.1',
+    allowedHosts: [],
+  },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
